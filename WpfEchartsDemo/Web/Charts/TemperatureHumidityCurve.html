@@ -1,0 +1,125 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <!--<meta charset="utf-8" />-->
+    <meta http-equiv="X-UA-Compatible" content="IE=10,9,8,7" />
+
+</head>
+<body oncontextmenu="return false">
+    <div id="main">
+
+    </div>
+    <script src="echarts.min.js"></script>
+    <script src="dataTool.js"></script>
+    <script language="javascript" type="text/javascript">
+        var myChart = null;
+        var chart = null;
+        var XData = [];
+        var WData = [];
+        var SData = [];
+        function SetChartSize(size) {
+            var chartSize = eval(size);
+            chart = null;
+            chart = document.getElementById('main');
+            chart.style.width = chartSize[0] + 'px';
+            chart.style.height = chartSize[1] + 'px';
+
+        }
+        function InitializeChart(xData, wData, sData) {
+            //XData = xData.split(',');
+            //WData = wData.split(',');
+            //SData = sData.split(',');
+            option = {
+                backgroundColor: 'Transparent',
+                tooltip: {
+                    trigger: 'axis'
+                },
+                legend: {
+                    data: [{
+                        name: '温度',
+                        icon: 'circle',
+                        textStyle: {
+                            color: "#58FFFE"       // 图例文字颜色
+                        }
+                    },
+                    {
+                        name: '湿度',
+                        icon: 'circle',
+                        textStyle: {
+                            color: "#5970FF"          // 图例文字颜色
+                        }
+                    }],
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: XData,
+                    axisLabel: {
+                        color: "#FFFFFF"
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        color: "#FFFFFF"
+                    }
+                },
+                series: [{
+                    name: '温度',
+                    data: WData,
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            color: "#58FFFE"
+                        }
+                    }
+                }, {
+                    name: '湿度',
+                    data: SData,
+                    type: 'line',
+                    smooth: true,
+                    itemStyle: {
+                        normal: {
+                            color: "#5970FF"
+                        }
+                    }
+                }]
+            };
+            echarts.dispose(document.getElementById('main'));
+            myChart = echarts.init(document.getElementById('main'), 'dark');
+            myChart.setOption(option);
+        }
+
+        function SetDataChart(xData, wData, sData) {
+            if (XData != null) {
+                XData = xData.split(',');
+            }
+            if (WData != null) {
+                WData = wData.split(',');
+            }
+            if (SData != null) {
+                SData = sData.split(',');
+            }
+            myChart.setOption({
+                xAxis: {
+                    data: XData,
+                },
+                series: [{
+                    data: WData
+                },
+                {
+                    data: SData
+                }]
+            });
+        }
+    </script>
+</body>
+</html>
